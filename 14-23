@@ -1,0 +1,217 @@
+Below are **simple, individual, beginner‑friendly codes** for each task.
+Each task is **independent**. You can copy‑paste and run them separately.
+
+---
+
+## ✅ Task 15: Dynamic Registration Form with Live Preview (HTML + JS)
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Workshop Registration</h2>
+<input id="name" placeholder="Name" oninput="preview()"><br><br>
+<input id="email" placeholder="Email" oninput="preview()"><br><br>
+<select id="workshop" onchange="preview()">
+  <option>Select Workshop</option>
+  <option>AI</option>
+  <option>Web Dev</option>
+</select>
+<h3>Live Preview</h3>
+<p id="out"></p>
+<script>
+function preview() {
+  out.innerHTML = name.value + " | " + email.value + " | " + workshop.value;
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 16: Login Interface with Role‑Based Redirect
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<select id="role">
+  <option value="">Select Role</option>
+  <option value="admin">Admin</option>
+  <option value="student">Student</option>
+</select>
+<button onclick="login()">Login</button>
+<script>
+function login() {
+  let r = role.value;
+  if(r=="admin") location.href="admin.html";
+  else if(r=="student") location.href="student.html";
+  else alert("Select role");
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 17: Student Feedback System (Rating + Comments)
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Feedback</h3>
+<select id="rate">
+<option>Rate</option>
+<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+</select><br><br>
+<textarea id="comment" placeholder="Comment"></textarea><br>
+<button onclick="show()">Submit</button>
+<p id="result"></p>
+<script>
+function show(){
+result.innerText = "Rating: " + rate.value + " Comment: " + comment.value;
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 18: Notification System Simulation
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Notifications</h3>
+<button onclick="add()">Add Notification</button>
+<ul id="list"></ul>
+<script>
+function add(){
+  let li=document.createElement("li");
+  li.innerText="New Notification";
+  list.appendChild(li);
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 19: Blog with Real‑Time Comments
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Blog</h2>
+<input id="cmt" placeholder="Comment">
+<button onclick="post()">Post</button>
+<ul id="comments"></ul>
+<script>
+function post(){
+  let li=document.createElement("li");
+  li.innerText=cmt.value;
+  comments.appendChild(li);
+  cmt.value="";
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 20: E‑Commerce Product List + Cart
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Products</h3>
+<button onclick="add('Laptop')">Laptop</button>
+<button onclick="add('Phone')">Phone</button>
+<h4>Cart:</h4>
+<p id="cart"></p>
+<script>
+let items=[];
+function add(p){
+  items.push(p);
+  cart.innerText = items.join(', ');
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 21: Student Management Dashboard
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Student Dashboard</h2>
+<ul>
+<li>Name: Rahul</li>
+<li>Course: CS</li>
+<li>Year: 3</li>
+</ul>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 22: Product Browsing with Category Routing (Simulated)
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="show('Books')">Books</button>
+<button onclick="show('Electronics')">Electronics</button>
+<p id="out"></p>
+<script>
+function show(cat){ out.innerText="Category: " + cat; }
+</script>
+</body>
+</html>
+```
+
+---
+
+## ✅ Task 23: Multi‑Page Student Dashboard (Simple JS Navigation)
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="page('home')">Home</button>
+<button onclick="page('profile')">Profile</button>
+<p id="content"></p>
+<script>
+function page(p){
+content.innerText = p === 'home' ? 'Welcome Student' : 'Student Profile';
+}
+</script>
+</body>
+</html>
+```
+
+---
+
+### 📌 If you want:
+
+✔ React versions
+✔ Viva explanation
+✔ PPT slides
+✔ Diagram + output screenshots
+
+Just tell me 👍
