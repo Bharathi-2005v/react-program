@@ -1,0 +1,856 @@
+task 3 quiz.jsx
+import { useState } from "react";
+
+const questions = [
+  {
+    question: "What does React use to build UI?",
+    options: ["Databases", "Components", "Servers", "Browsers"],
+    answer: "Components",
+  },
+  {
+    question: "Which hook is used for state?",
+    options: ["useData", "useState", "useEffect", "useRef"],
+    answer: "useState",
+  },
+  {
+    question: "What language is React written in?",
+    options: ["Python", "Java", "JavaScript", "C++"],
+    answer: "JavaScript",
+  },
+];
+
+export default function Quiz() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleAnswer = (option) => {
+    if (option === questions[currentQuestion].answer) {
+      setScore(score + 1);
+    }
+
+    const next = currentQuestion + 1;
+    if (next < questions.length) {
+      setCurrentQuestion(next);
+    } else {
+      setShowResult(true);
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1>Mini Quiz</h1>
+
+      {showResult ? (
+        <h2>
+          Final Score: {score} / {questions.length}
+        </h2>
+      ) : (
+        <>
+          <h2>{questions[currentQuestion].question}</h2>
+
+          {questions[currentQuestion].options.map((option) => (
+            <button
+              key={option}
+              onClick={() => handleAnswer(option)}
+              style={styles.button}
+            >
+              {option}
+            </button>
+          ))}
+
+          <p>Score: {score}</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "50px auto",
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif",
+  },
+  button: {
+    display: "block",
+    width: "100%",
+    padding: "10px",
+    margin: "8px 0",
+    fontSize: "16px",
+    cursor: "pointer",
+  },
+};
+
+task 5 feedback
+Feedback.jsx
+import React, { useState } from "react";
+
+function Feedback() {
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [feedbackList, setFeedbackList] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (name.trim() === "" || message.trim() === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const newFeedback = {
+      id: Date.now(),
+      name: name,
+      message: message,
+    };
+
+    setFeedbackList([...feedbackList, newFeedback]);
+    setName("");
+    setMessage("");
+  };
+
+  return (
+    <div style={{ maxWidth: "400px" }}>
+      <h2>Feedback Form</h2>
+
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+
+        <div style={{ marginBottom: "10px" }}>
+          <textarea
+            placeholder="Your Feedback"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <hr />
+
+      <h3>Submitted Feedback</h3>
+      {feedbackList.length === 0 && <p>No feedback yet.</p>}
+
+      {feedbackList.map((item) => (
+        <div
+          key={item.id}
+          style={{
+            border: "1px solid #ccc",
+            padding: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <strong>{item.name}</strong>
+          <p>{item.message}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Feedback;
+
+app.jsx
+import Feedback from "./Feedback";
+
+function App() {
+  return <Feedback />;
+}
+
+export default App;
+task 4 classroom use
+classroom.jsx
+import React, { useState } from "react";
+
+function Classroom() {
+  const [question] = useState("Which option do you prefer?");
+  const [options, setOptions] = useState([
+    { id: 1, text: "Option A", votes: 0 },
+    { id: 2, text: "Option B", votes: 0 },
+    { id: 3, text: "Option C", votes: 0 },
+  ]);
+
+  const vote = (id) => {
+    const updatedOptions = options.map((option) =>
+      option.id === id
+        ? { ...option, votes: option.votes + 1 }
+        : option
+    );
+    setOptions(updatedOptions);
+  };
+
+  return (
+    <div>
+      <h2>{question}</h2>
+      {options.map((option) => (
+        <div key={option.id} style={{ marginBottom: "10px" }}>
+          <button onClick={() => vote(option.id)}>
+            {option.text}
+          </button>
+          <span style={{ marginLeft: "10px" }}>
+            Votes: {option.votes}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Classroom;
+
+app.jsx
+import React from "react";
+import Classroom from "./Classroom";
+
+function App() {
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1>Classroom Polling System</h1>
+      <Classroom />
+    </div>
+  );
+}
+
+export default App;
+
+task 6 course
+Course.jsx
+import React, { useState } from "react";
+
+function Course() {
+  const [studentName, setStudentName] = useState("");
+  const [courseName, setCourseName] = useState("");
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (studentName.trim() === "" || courseName.trim() === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const newEnrollment = {
+      id: Date.now(),
+      studentName: studentName,
+      courseName: courseName,
+    };
+
+    setEnrolledCourses([...enrolledCourses, newEnrollment]);
+    setStudentName("");
+    setCourseName("");
+  };
+
+  return (
+    <div style={{ maxWidth: "400px" }}>
+      <h2>Course Enrollment</h2>
+
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="text"
+            placeholder="Student Name"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="text"
+            placeholder="Course Name"
+            value={courseName}
+            onChange={(e) => setCourseName(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+
+        <button type="submit">Enroll</button>
+      </form>
+
+      <hr />
+
+      <h3>Enrolled Courses</h3>
+
+      {enrolledCourses.length === 0 && (
+        <p>No students enrolled yet.</p>
+      )}
+
+      {enrolledCourses.map((item) => (
+        <div
+          key={item.id}
+          style={{
+            border: "1px solid #ccc",
+            padding: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <strong>{item.studentName}</strong> enrolled in{" "}
+          <em>{item.courseName}</em>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Course;
+app.jsx
+import Course from "./Course";
+
+function App() {
+  return <Course />;
+}
+
+export default App;
+
+task 7 tracker
+import React, { useState } from "react";
+
+function Tracker() {
+  const [students, setStudents] = useState([
+    { id: 1, name: "Alice", status: "Absent" },
+    { id: 2, name: "Bob", status: "Absent" },
+    { id: 3, name: "Charlie", status: "Absent" },
+  ]);
+
+  const markPresent = (id) => {
+    const updatedStudents = students.map((student) =>
+      student.id === id
+        ? { ...student, status: "Present" }
+        : student
+    );
+    setStudents(updatedStudents);
+  };
+
+  const markAbsent = (id) => {
+    const updatedStudents = students.map((student) =>
+      student.id === id
+        ? { ...student, status: "Absent" }
+        : student
+    );
+    setStudents(updatedStudents);
+  };
+
+  return (
+    <div style={{ maxWidth: "500px" }}>
+      <h2>Attendance Tracker</h2>
+
+      {students.map((student) => (
+        <div
+          key={student.id}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "10px",
+            padding: "8px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <span>
+            {student.name} -{" "}
+            <strong
+              style={{
+                color:
+                  student.status === "Present" ? "green" : "red",
+              }}
+            >
+              {student.status}
+            </strong>
+          </span>
+
+          <div>
+            <button
+              onClick={() => markPresent(student.id)}
+              style={{ marginRight: "5px" }}
+            >
+              Present
+            </button>
+            <button onClick={() => markAbsent(student.id)}>
+              Absent
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Tracker;
+app.jsx
+import Tracker from "./Tracker";
+
+function App() {
+  return <Tracker />;
+}
+
+export default App;
+task 8 task
+task.jsx
+import React, { useState } from "react";
+
+function Task() {
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+    if (task.trim() === "") {
+      alert("Please enter a task");
+      return;
+    }
+
+    const newTask = {
+      id: Date.now(),
+      text: task,
+    };
+
+    setTasks([...tasks, newTask]);
+    setTask("");
+  };
+
+  const handleRemoveTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
+  return (
+    <div style={{ maxWidth: "400px" }}>
+      <h2>Task Dashboard</h2>
+
+      <form onSubmit={handleAddTask} style={{ marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Enter a task"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          style={{ width: "70%", marginRight: "10px" }}
+        />
+        <button type="submit">Add</button>
+      </form>
+
+      {tasks.length === 0 && <p>No tasks added yet.</p>}
+
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {tasks.map((t) => (
+          <li
+            key={t.id}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              border: "1px solid #ccc",
+              padding: "8px",
+              marginBottom: "8px",
+            }}
+          >
+            <span>{t.text}</span>
+            <button onClick={() => handleRemoveTask(t.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Task;
+app.jsx
+import Task from "./Task";
+
+function App() {
+  return <Task />;
+}
+
+export default App;
+
+task 9 ticket
+ticket.jsx
+import React from "react";
+
+function Ticket() {
+  const bookTicket = () => {
+    // 1. Ask user for name
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Booking cancelled. Name is required.");
+      return;
+    }
+
+    // 2. Ask user for flight destination
+    const destination = prompt("Enter your flight destination:");
+    if (!destination) {
+      alert("Booking cancelled. Destination is required.");
+      return;
+    }
+
+    // 3. Ask user for number of tickets
+    const tickets = prompt("How many tickets do you want to book?");
+    if (!tickets || isNaN(tickets) || Number(tickets) <= 0) {
+      alert("Booking cancelled. Invalid number of tickets.");
+      return;
+    }
+
+    // 4. Confirm booking
+    const confirmBooking = window.confirm(
+      `Confirm booking for ${name} to ${destination} (${tickets} ticket(s))?`
+    );
+
+    if (confirmBooking) {
+      alert(
+        `Booking successful!\nPassenger: ${name}\nDestination: ${destination}\nTickets: ${tickets}`
+      );
+    } else {
+      alert("Booking cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Flight Ticket Booking</h2>
+      <button onClick={bookTicket}>Book Ticket</button>
+    </div>
+  );
+}
+
+export default Ticket;
+app.jsx
+import Ticket from "./Ticket";
+
+function App() {
+  return <Ticket />;
+}
+
+export default App;
+task 10 reservation
+reservation.jsx
+import React from "react";
+
+function Reservation() {
+  const bookHotel = () => {
+    // 1. Ask for guest name
+    const guestName = prompt("Enter your name:");
+    if (!guestName) {
+      alert("Reservation cancelled. Name is required.");
+      return;
+    }
+
+    // 2. Ask for number of rooms
+    const rooms = prompt("How many rooms would you like to book?");
+    if (!rooms || isNaN(rooms) || Number(rooms) <= 0) {
+      alert("Reservation cancelled. Invalid number of rooms.");
+      return;
+    }
+
+    // 3. Ask for check-in date
+    const checkIn = prompt("Enter check-in date (YYYY-MM-DD):");
+    if (!checkIn) {
+      alert("Reservation cancelled. Check-in date is required.");
+      return;
+    }
+
+    // 4. Ask for check-out date
+    const checkOut = prompt("Enter check-out date (YYYY-MM-DD):");
+    if (!checkOut) {
+      alert("Reservation cancelled. Check-out date is required.");
+      return;
+    }
+
+    // 5. Confirm reservation
+    const confirmBooking = window.confirm(
+      `Confirm reservation for ${guestName}?\nRooms: ${rooms}\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}`
+    );
+
+    if (confirmBooking) {
+      alert(
+        `Reservation confirmed!\nGuest: ${guestName}\nRooms: ${rooms}\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}`
+      );
+    } else {
+      alert("Reservation cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Hotel Reservation System</h2>
+      <button onClick={bookHotel}>Book Hotel</button>
+    </div>
+  );
+}
+
+export default Reservation;
+app.jsx
+import Reservation from "./Reservation";
+
+function App() {
+  return <Reservation />;
+}
+
+export default App;
+task 11 cab booking
+cab.jsx
+import React from "react";
+
+function Cab() {
+  const bookCab = () => {
+    // 1. Ask for passenger name
+    const passenger = prompt("Enter your name:");
+    if (!passenger) {
+      alert("Booking cancelled. Name is required.");
+      return;
+    }
+
+    // 2. Ask for pickup location
+    const pickup = prompt("Enter pickup location:");
+    if (!pickup) {
+      alert("Booking cancelled. Pickup location is required.");
+      return;
+    }
+
+    // 3. Ask for drop location
+    const drop = prompt("Enter drop location:");
+    if (!drop) {
+      alert("Booking cancelled. Drop location is required.");
+      return;
+    }
+
+    // 4. Ask for cab type
+    const cabType = prompt(
+      "Enter cab type (e.g., Mini, Sedan, SUV):"
+    );
+    if (!cabType) {
+      alert("Booking cancelled. Cab type is required.");
+      return;
+    }
+
+    // 5. Ask for number of passengers
+    const passengers = prompt("Enter number of passengers:");
+    if (!passengers || isNaN(passengers) || Number(passengers) <= 0) {
+      alert("Booking cancelled. Invalid number of passengers.");
+      return;
+    }
+
+    // 6. Confirm booking
+    const confirmBooking = window.confirm(
+      `Confirm cab booking for ${passenger}?\nPickup: ${pickup}\nDrop: ${drop}\nCab Type: ${cabType}\nPassengers: ${passengers}`
+    );
+
+    if (confirmBooking) {
+      alert(
+        `Cab booked successfully!\nPassenger: ${passenger}\nPickup: ${pickup}\nDrop: ${drop}\nCab Type: ${cabType}\nPassengers: ${passengers}`
+      );
+    } else {
+      alert("Booking cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Online Cab Booking</h2>
+      <button onClick={bookCab}>Book a Cab</button>
+    </div>
+  );
+}
+
+export default Cab;
+app.jsx
+import Cab from "./Cab";
+
+function App() {
+  return <Cab />;
+}
+
+export default App;
+task 12 registration
+registration.jsx
+import React from "react";
+
+function Event() {
+  const registerEvent = () => {
+    // 1. Ask for participant name
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Registration cancelled. Name is required.");
+      return;
+    }
+
+    // 2. Ask for email
+    const email = prompt("Enter your email:");
+    if (!email) {
+      alert("Registration cancelled. Email is required.");
+      return;
+    }
+
+    // 3. Ask for event selection
+    const eventName = prompt(
+      "Enter the event you want to register for (e.g., Coding Workshop, Art Class):"
+    );
+    if (!eventName) {
+      alert("Registration cancelled. Event name is required.");
+      return;
+    }
+
+    // 4. Confirm registration
+    const confirmReg = window.confirm(
+      `Confirm registration for ${name} (${email}) for "${eventName}"?`
+    );
+
+    if (confirmReg) {
+      alert(
+        `Registration successful!\nName: ${name}\nEmail: ${email}\nEvent: ${eventName}`
+      );
+    } else {
+      alert("Registration cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Event Registration</h2>
+      <button onClick={registerEvent}>Register for Event</button>
+    </div>
+  );
+}
+
+export default Event;
+app.jsx
+import Event from "./Event";
+
+function App() {
+  return <Event />;
+}
+
+export default App;
+13
+userprofile.jsx
+import React, { useState } from 'react';
+
+const UserProfile = () => {
+  // State for form fields
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    age: '',
+  });
+
+  // State for errors
+  const [errors, setErrors] = useState({});
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Validate form
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+   
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    if (!formData.age.trim()) {
+      newErrors.age = 'Age is required';
+    } else if (isNaN(formData.age) || formData.age <= 0) {
+      newErrors.age = 'Age must be a positive number';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      alert('Profile updated successfully!');
+      console.log('Updated Profile:', formData);
+      // Here you could send the data to a backend API
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+      <h2>Edit Profile</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+        </div>
+
+        <div>
+          <label>Age:</label>
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+          />
+          {errors.age && <p style={{ color: 'red' }}>{errors.age}</p>}
+        </div>
+
+        <button type="submit">Save Profile</button>
+      </form>
+    </div>
+  );
+};
+
+export default UserProfile;
+app.jsx
+import React from 'react';
+import UserProfile from './UserProfile';
+
+const App = () => {
+  return (
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <h1>My React App</h1>
+      <UserProfile />
+    </div>
+  );
+};
+
+export default App;
+
+
+
+
+
+
+
+
